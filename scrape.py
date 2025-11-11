@@ -1,32 +1,41 @@
 import requests
-import xml.etree.ElementTree as ET
+from bs4 import BeautifulSoup
 
-API_URL = "https://wsearch.nlm.nih.gov/ws/query"
+base = "https://medlineplus.gov/druginfo/meds/"
+headers = {"User-Agent": "Mozilla/5.0"}
 
-params = {
-    "db": "drugs",  # tell API we want drug database
-    "term": "all"   # return all results
-}
+drug_texts = []
 
-# Request data from API
-response = requests.get(API_URL, params=params)
-xml_content = response.text
+keys = ["a606008", "a601105"]
 
-# Parse XML
-root = ET.fromstring(xml_content)
+for key in keys:
+    url = base + key + ".html"
+    print("Scraping:", url)
 
-drug_entries = []
+    r = requests.get(url, headers=headers)
+    if r.status_code != 200:
+        print("Failed:", key)
+        continue
 
-# Loop through all <document> elements
-for doc in root.findall("document"):
-    name = doc.findtext("name")
-    url = doc.findtext("url")
+    soup = BeautifulSoup(r.text, "html.parser")
 
-    if url:
-        drug_entries.append({
-            "name": name,
-            "url": url
-        })
+    # main content block
+    container = soup.find("article")
+    if not container:
+        continue
 
-print("✅ Found", len(drug_entries), "drug entries.")
-print("Example:", drug_entries[:5])
+    text = ""
+
+    paragraphs = [p.get_text(" ", strip=True) for p in container.find_all("div", "section-body")] #go by section body not by paragraph
+    header = [h.get_text(" ", strip=True) for h in container.find_all("div", "section-title")]
+    for i in range(len(header)):
+        text += header[i] + "\n"
+        text += paragraphs[i] + "\n"
+
+    drug_texts.append({
+        "key": key,
+        "url": url,
+        "text": text
+    })
+
+print("\n Scraped", print(drug_texts), "drugs.")
