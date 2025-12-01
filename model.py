@@ -5,9 +5,9 @@ from transformers import RobertaTokenizer, RobertaForSequenceClassification
 from transformers import Trainer, TrainingArguments
 from datasets import Dataset
 
-df = pd.read_csv("data/200_Drug_Instructions.csv")
+df = pd.read_csv("data/combined_drug_instructions.csv")
 
-df = df.rename(columns={"text": "sentence", "generated": "labels"})
+df = df.rename(columns={"instructions": "sentence", "generated": "labels"})
 
 train_df, test_df = train_test_split(df, test_size=0.3, random_state=42)
 
