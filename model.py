@@ -1,5 +1,6 @@
 import pandas as pd
 import random
+import numpy as np
 from sklearn.model_selection import train_test_split
 from transformers import RobertaTokenizer, RobertaForSequenceClassification
 from transformers import Trainer, TrainingArguments
@@ -38,10 +39,6 @@ train_ds = train_ds.map(tokenize, batched=True)
 test_ds = test_ds.map(tokenize, batched=True)
 val_ds = val_ds.map(tokenize, batched=True)
 
-train_ds = train_ds.remove_columns(["sentence", "__index_level_0__"])
-test_ds = test_ds.remove_columns(["sentence", "__index_level_0__"])
-val_ds = val_ds.remove_columns(["sentence", "__index_level_0__"])
-
 #Set format for PyTorch
 train_ds.set_format("torch")
 test_ds.set_format("torch")
@@ -67,27 +64,31 @@ trainer = Trainer(
 
 trainer.train()
 
+def arg_max(model_preds):
+    label_preds = []
+    for i in model_preds:
+        label_preds.append(np.arg_max(i))
+    return label_preds
+
+def evaluate(type, labels, preds):
+    f1 = f1_score(labels, preds)
+    print(f"{type} F1 SCORE: ", f1)
+    accuracy = accuracy_score(labels, preds)
+    print(f"{type} ACCURACY SCORE: ", accuracy)
+    recall = recall_score(labels, preds)
+    print(f"{type} RECALL SCORE: ", recall)
+
 train_preds, train_label_ids, train_metrics = trainer.predict(train_ds)
-train_f1 = f1_score(train_df["labels"], train_label_ids)
-print("TRAIN F1 SCORE: ", train_f1)
-train_acc = accuracy_score(train_df["labels"], train_label_ids)
-print("TRAIN ACCURACY SCORE: ", train_acc)
-train_recall = recall_score(train_df["labels"], train_label_ids)
-print("TRAIN RECALL SCORE: ", train_recall)
+preds = arg_max(train_preds)
+evaluate("train", train_df["labels"], preds)
 
 val_preds, val_label_ids, val_metrics = trainer.predict(val_ds)
-val_f1 = f1_score(val_df["labels"], val_label_ids)
-print("VAL F1 SCORE: ",  val_f1)
-val_acc = accuracy_score(val_df["labels"], val_label_ids)
-print("VAL ACCURACY SCORE: ", val_acc)
-val_recall = recall_score(val_df["labels"], val_label_ids)
-print("VAL RECALL SCORE: ", val_recall)
+preds = arg_max(val_preds)
+evaluate("val", val_df["labels"], preds)
 
 test_preds, test_label_ids, test_metrics = trainer.predict(test_ds)
-test_f1 = f1_score(test_df["labels"], test_label_ids)
-print("TEST F1 SCORE: ", test_f1)
-test_acc = accuracy_score(test_df["labels"], test_label_ids)
-print("TEST ACCURACY SCORE: ", test_acc)
-test_recall = recall_score(test_df["labels"], test_label_ids)
-print("TEST RECALL SCORE: ", test_recall)
+preds = arg_max(test_preds)
+evaluate("test", test_df["labels"], preds)
+
+
 
