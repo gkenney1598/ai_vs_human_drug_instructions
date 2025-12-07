@@ -67,7 +67,7 @@ trainer.train()
 def arg_max(model_preds):
     label_preds = []
     for i in model_preds:
-        label_preds.append(np.arg_max(i))
+        label_preds.append(np.argmax(i))
     return label_preds
 
 def evaluate(type, labels, preds):

@@ -1,12 +1,12 @@
 from openai import OpenAI
 import pandas as pd
-from pydantic import BaseModel
 import csv
 import ast
 
 #build dataframe to get drug names to pass to model
-drugs = pd.read_csv('data/drug_instructions.csv', encoding='utf-8')
-drug_names = drugs[:]["name"]
+drugs = pd.read_csv('data/edited_combined.csv', encoding='utf-8')
+drug_instructions = drugs[:1000]["text"]
+drug_names = drugs[:1000]["name"]
 
 #do not upload key!
 client = OpenAI()
@@ -19,9 +19,16 @@ with open('data/example_drug_w_warning.txt', 'r', encoding='utf-8') as file: #ex
 
 instructions = []
 
-for i in range(0, 100, 10): #pass 10 drugs in at a time
+prompt_messages_reword = [
+        {"role": "system", "content": "You are a doctor rewriting instructions for drug usage. "
+        "You should rewrite all the instructions for each drug, making sure to answer all the same questions:Why is this medication prescribed? How should this medicine be used? What special precautions should I follow? What special dietary instructions should I follow? What should I do if I forget a dose? What side effects can this medication cause? Rewrite the instructions in the same format as the original. Return a dictionary with each response with the structure {'name': <drug_name>, 'instructions': <instructions>}. Do not include any new lines or \n"},
+        {}
+    ]
+
+for i in range(0, 10): #pass 10 drugs in at a time to avoid truncation
+    prompt_messages_reword[1] = {"role": "user", "content": f"Rewrite these instructions: {drug_instructions[i]} for the drug {drug_names[i]}"}
     
-    prompt_messages = [
+    prompt_messages_generated = [
         {"role": "system", "content": "You are a doctor writing instructions for drug usage. You should answer the following questions for each drug: "
             "Why is this medication prescribed? How should this medicine be used? What special precautions should I follow? What special dietary instructions should I follow? "
             "What should I do if I forget a dose? What side effects can this medication cause? Write this in this format if the drug does not need an"
@@ -34,7 +41,7 @@ for i in range(0, 100, 10): #pass 10 drugs in at a time
     try:
         response = client.responses.parse(
             model="gpt-5",
-            input=prompt_messages,
+            input=prompt_messages_reword,
         )
         instruct = ast.literal_eval(response.output_text) #convert returned string to list of dicts
         instructions.append(instruct)
@@ -47,8 +54,9 @@ with open('data/generated_drug_instructions.csv', 'w', newline='', encoding='utf
     fieldnames = ['name', 'instructions']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
-    for row in instructions:
-        writer.writerows(i for i in row)
+    writer.writerows(instructions)
+    # for row in instructions: #write each instruction in each row into the csv
+    #     writer.writerows(i for i in row)
 
 
 
