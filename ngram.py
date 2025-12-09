@@ -10,7 +10,7 @@ def jaccard_distance(a, b):
     return 1.0 * len(a & b) / len(a | b)
 
 def ngram(fname):
-    df = pd.read_csv("fname")
+    df = pd.read_csv(fname)
 
     df = df.rename(columns={"instructions": "sentence", "generated": "labels"})
 
