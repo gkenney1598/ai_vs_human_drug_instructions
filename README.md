@@ -29,7 +29,7 @@ Run model.py to train model on a dataset and get results.
 
 ### Human-Generated Instructions
 
-To begin, we created an excel spreadsheet and manually added 500 identification codes which we obtained for MedlinePlus. This is a government website that contains instructions for drug usage. We used the idenfitication codes to then scrape MedlinePlus and create a CSV with descriptions of all of these medications. This included sections such as "Why is this mediciation prescribed?", "How should this medication be used?", "Other uses for this medicine", "What special precautions should I follow?", and "What special dietary instruciton should I follow?"
+To begin, we created an excel spreadsheet and manually added 500 identification codes which we obtained for MedlinePlus. This is a government website that contains instructions for drug usage. We used the identification codes to then scrape MedlinePlus and create a CSV with descriptions of all of these medications. This included sections such as "Why is this medication prescribed?", "How should this medication be used?", "Other uses for this medicine", "What special precautions should I follow?", and "What special dietary instruction should I follow?"
 
 ### AI-Generated Instructions
 
