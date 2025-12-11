@@ -1,0 +1,26 @@
+{'loss': 0.7035, 'grad_norm': 21.129268646240234, 'learning_rate': 4.621212121212121e-05, 'epoch': 0.23}
+{'loss': 0.5046, 'grad_norm': 37.017822265625, 'learning_rate': 4.242424242424243e-05, 'epoch': 0.45}
+{'loss': 0.2872, 'grad_norm': 0.25562259554862976, 'learning_rate': 3.8636363636363636e-05, 'epoch': 0.68}
+{'loss': 0.2144, 'grad_norm': 1.0526291131973267, 'learning_rate': 3.484848484848485e-05, 'epoch': 0.91}
+{'eval_loss': 0.2731117904186249, 'eval_runtime': 7.2245, 'eval_samples_per_second': 20.763, 'eval_steps_per_second': 2.63, 'epoch': 1.0}
+{'loss': 0.2479, 'grad_norm': 0.17343229055404663, 'learning_rate': 3.106060606060606e-05, 'epoch': 1.14}
+{'loss': 0.1945, 'grad_norm': 165.009033203125, 'learning_rate': 2.7272727272727273e-05, 'epoch': 1.36}
+{'loss': 0.1142, 'grad_norm': 0.04449504613876343, 'learning_rate': 2.3484848484848487e-05, 'epoch': 1.59}
+{'loss': 0.2337, 'grad_norm': 0.12950125336647034, 'learning_rate': 1.9696969696969697e-05, 'epoch': 1.82}
+{'eval_loss': 0.002644679509103298, 'eval_runtime': 7.1909, 'eval_samples_per_second': 20.86, 'eval_steps_per_second': 2.642, 'epoch': 2.0}
+{'loss': 0.0716, 'grad_norm': 0.07371994107961655, 'learning_rate': 1.590909090909091e-05, 'epoch': 2.05}
+{'loss': 0.0354, 'grad_norm': 0.5281358361244202, 'learning_rate': 1.2121212121212122e-05, 'epoch': 2.27}
+{'loss': 0.0363, 'grad_norm': 0.02683090977370739, 'learning_rate': 8.333333333333334e-06, 'epoch': 2.5}
+{'loss': 0.0012, 'grad_norm': 0.022172119468450546, 'learning_rate': 4.5454545454545455e-06, 'epoch': 2.73}
+{'loss': 0.0443, 'grad_norm': 0.02587275020778179, 'learning_rate': 7.575757575757576e-07, 'epoch': 2.95}
+{'eval_loss': 0.0005230437964200974, 'eval_runtime': 7.2975, 'eval_samples_per_second': 20.555, 'eval_steps_per_second': 2.604, 'epoch': 3.0}
+{'train_runtime': 339.372, 'train_samples_per_second': 6.188, 'train_steps_per_second': 0.778, 'train_loss': 0.20369924679857143, 'epoch': 3.0}
+train F1 SCORE:  0.9971428571428571
+train ACCURACY SCORE:  0.9971428571428571
+train RECALL SCORE:  0.9971428571428571
+val F1 SCORE:  1.0
+val ACCURACY SCORE:  1.0
+val RECALL SCORE:  1.0
+test F1 SCORE:  0.9933774834437086
+test ACCURACY SCORE:  0.9933333333333333
+test RECALL SCORE:  1.0

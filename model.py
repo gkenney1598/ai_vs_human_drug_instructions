@@ -95,4 +95,3 @@ def main():
     model("data/human(0)_and_generated(1)_instructions.csv")
 
 main()
-
