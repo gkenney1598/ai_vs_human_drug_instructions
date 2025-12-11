@@ -1,3 +1,7 @@
+# Overview
+
+Our project aimed to identify if a model could be trained to predict whether or not a set of instructions for a drug was human-generated or AI-generated. This is important because  people are turning to AI for medical instructions and it is vital that the information they are receiving is accurate. We found that our model is very easily able to distinguish between human-generated and AI-generated drug instructions, and we also found that texts that were more similar in terms of wording and content were more likely to be mislabeled; however, the model was still incredibly accurate in its labeling. 
+
 # Research Question
 
 Can we train a model to predict whether or not a set of instructions for a drug is human-generated or AI-generated?
@@ -14,16 +18,28 @@ To begin, we created an excel spreadsheet and manually added 500 identification 
 
 Using the OpenAI API, we prompted ChatGPT-5 with the same 500 drugs and an example output of two medications we did not include in our dataset. We put all of the generated medication instructions into a CSV. 
 
+### AI-Reworded Instructions
+
+Using the OpenAI API, ChatGPT was separately prompted to reword all the MedlinePlus drug instructions.
+
 ## Data Organization
-With our completed CSV files, we assigned 0s to all MedlinePlus drug instructions and 1s to all ChatGPT generated instructions.
+With the MedlinePlus, generated and reworded instructions, we created three CSV files: 
+- Human-Generated and AI-Generated instructions
+- Human-Generated and AI-reworded instructions
+- AI-Generated and AI-reworded instructions
 
 # Model
 
-We used the RoBERTa for Sequence Classification model. This model utilizes supervised learning with the preassigned labels to determine if it can accurately distinguish between Human-Generated instructions and AI-Generated instructions.
+We used the RoBERTa for Sequence Classification model. This model utilizes supervised learning with the preassigned labels to determine if it can accurately distinguish between Human-Generated instructions, AI-Generated instructions and AI-Reworded instructions.
 
-# Milestone 1
+# Future Directions
 
-The results file output by the model from our first training run, with 100 AI generated and 100 human generated responses, is included in the repository as "results". Additionally, [here](https://drive.google.com/file/d/17HCmdBOQfpY1g8V73YuX72i6giQjD7F6/view?usp=sharing) is the terminal output from the training, including the loss. For this first pass, we were mainly concerned with providing a proof-of-concept and not how accurate our model was. To this end, we truncated the training texts to 256 characters. For Milestone II, we will work on fine-tuning the model to produce better results, including finding a work around to RoBERTa's token limit. However it is promising that the loss is generally around 0.1 without any fine-tuning, suggesting that the model can predict accurately a majority of the time.
+Our model was extremely accurate, but AI is still known to hallucinate or give false information, so further investigation must be done to more accurately represent these interactions. Therefore, future research should focus on a less formal formatting and should have a more varied data set. Real interactions between humans and AI must be mimicked to gain a better understanding of what type of information AI is providing to humans. Our study was a very specific instance where we used one data set of medications and we had prompted AI to generate the same content, but this does not mimic how humans actually interact with AI nor does it mimic how patients interact with medical experts. Although we analyze how similar the content is, we do not evaluate the accuracy of the medical information provided so this should also be part of future research.
 
+# Contributions
 
+[Dilni Pathirana](https://github.com/dilnipath)
+[Morgan Greenwald](https://github.com/Morgans-Code)
+Grace Kenney
 
+All three of us contributed equal time to this project.
