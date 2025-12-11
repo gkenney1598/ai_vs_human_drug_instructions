@@ -95,4 +95,3 @@ def main():
     model("data/Human_ChatGPTGen.csv")
 
 main()
-
