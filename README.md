@@ -6,6 +6,23 @@ Our project aimed to identify if a model could be trained to predict whether or 
 
 Can we train a model to predict whether or not a set of instructions for a drug is human-generated or AI-generated?
 
+# Replication Instructions
+Install [MiniForge](https://github.com/conda-forge/miniforge). Download all files from this repository to a folder and navigate to it. Run the following commands in Miniforge to download necessary libraries and activate environment:
+
+```
+$ conda env create -f environment.yml
+$ conda activate ml
+```
+Download the additional dependencies: 
++ [nltk](https://www.nltk.org/)
++ [OpenAI API](https://platform.openai.com/docs/quickstart)
++ [Transformers](https://huggingface.co/docs/transformers/en/installation)
++ [Datasets](https://huggingface.co/docs/datasets/en/installation)
++ [bs4](https://pypi.org/project/beautifulsoup4/)
+
+In order to run the generate_instructions.py, you will need your own OpenAI API key.
+Run model.py to train model on a dataset and get results.
+
 # Data
 
 ## Data Collection 
