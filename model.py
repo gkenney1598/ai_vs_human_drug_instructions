@@ -92,7 +92,7 @@ def model(fname):
     evaluate("test", test_df["labels"], preds)
 
 def main():
-    model("data/Human_ChatGPTGen.csv")
+    model("data/human(0)_and_generated(1)_instructions.csv")
 
 main()
 
